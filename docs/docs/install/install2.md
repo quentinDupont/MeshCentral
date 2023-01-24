@@ -9,7 +9,6 @@ This guide is specifically intended to help users install MeshCentral from start
 For some who want to skip this document entirely, there are quick install scripts that will get a MeshCentral2 instance up and running on Linux in a few minutes. These scripts will pretty much do what this document explains very rapidly. Right now, there are two such scripts available:
 
 ### Amazon Linux 2
-
 For Amazon EC2 users, that want to manage 100 devices or less. Launch a t3.nano or t3.micro EC2 instance with Amazon Linux 2 with TCP ports 22 (SSH), 80 (HTTP), 443 (HTTPS) and 4433 (CIRA) open. Then login as `ec2-user` and enter the following commands:
 
 ```
@@ -913,6 +912,14 @@ sudo chmod 755 –R /opt/meshcentral/meshcentral-data/letsencrypt
 ```
 
 This will allow the server to get and periodically update its Let’s Encrypt certificate. If this is not done, the server will generate an `ACCES: permission denied` exception.
+
+### Restore a Meshcentrak backup in Ubuntu
+
+- Stop Meshcentral service `sudo systemctl stop meshcentral.service`
+- In your old server, get your backup : meshcentral-data folder, and mongodump-xxxx.archive
+- In the new server, replace the actual meshcentral-data with your backup (it will handle your LestEncrypt cert also)
+- Restore mongodb : mongorestore --archive=mongodump-xxxx.archive
+- Restart meshcentral.service `sudo systemctl start meshcentral.service`
 
 ## Microsoft Azure
 
